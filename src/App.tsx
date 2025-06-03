@@ -10,9 +10,9 @@ function App() {
   };
 
   const displayWinner = () => {
-    if (game.endState === "X") {
+    if (game.endState == "X") {
       return "X won!";
-    } else if (game.endState === "O") {
+    } else if (game.endState == "O") {
       return "O won!";
     } else {
       return "Tie!";
