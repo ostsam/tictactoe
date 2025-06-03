@@ -22,7 +22,6 @@ function App() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-900 p-6">
       <div className="w-full max-w-sm bg-slate-800 rounded-xl shadow-lg overflow-hidden">
-        {/* Header / Status */}
         <div className="bg-gradient-to-r from-slate-700 to-slate-800 px-6 py-4">
           <h1 className="text-center my-5 text-4xl font-bold text-slate-100 tracking-wide">
             Current Player:
@@ -41,7 +40,6 @@ function App() {
           </div>
         </div>
 
-        {/* Game Board or Result */}
         <div className="p-5">
           {game.endState ? (
             <div className="flex flex-col items-center gap-4">
