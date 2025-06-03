@@ -11,9 +11,9 @@ function App() {
 
   const displayWinner = () => {
     if (game.endState === "X") {
-      return "X wins!";
+      return "X won!";
     } else if (game.endState === "O") {
-      return "O wins!";
+      return "O won!";
     } else {
       return "Tie!";
     }
