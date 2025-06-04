@@ -1,13 +1,65 @@
-import { useState } from "react";
-import { initGame, move } from "./logic/logic.ts";
+import { useEffect, useMemo, useState } from "react";
+import { initGame, move, type Game } from "./logic/logic.ts";
+
+export class ClientSideApi {
+  async createGame() {
+    const response = await fetch("/api/game", {
+      method: "POST",
+    });
+    const game = await response.json();
+    return game;
+  }
+
+  async move(id: string, rowIdx: number, colIdx: number) {
+    const response = await fetch(`/api/game/${id}/move`, {
+      method: "POST",
+      body: JSON.stringify({
+        rowIdx,
+        colIdx,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const updatedGame = await response.json();
+    return updatedGame;
+  }
+}
 
 function App() {
-  const [game, setGame] = useState(initGame());
+  const api = useMemo(() => new ClientSideApi(), []);
+  const [game, setGame] = useState<Game | undefined>(undefined);
 
-  const click = (rowIdx: number, colIdx: number) => {
-    if (game.endState) return;
-    setGame(move(game, rowIdx, colIdx));
+  const createNewGame = async () => {
+    const game = await api.createGame();
+    setGame(game);
   };
+
+  useEffect(() => {
+    createNewGame(), newMove();
+  }, []);
+
+  const newMove = async () => {};
+
+  const click = async (rowIdx: number, colIdx: number) => {
+    const response = await fetch(`/api/game/${game?.id}/move`, {
+      method: "POST",
+      body: JSON.stringify({
+        rowIdx,
+        colIdx,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const updatedGame = await response.json();
+    setGame(updatedGame);
+  };
+
+  if (!game) {
+    return <p>loading...</p>;
+  }
 
   const displayWinner = () => {
     if (game.endState == "X") {
