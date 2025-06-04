@@ -120,7 +120,7 @@ function App() {
           )}
           <button
             onClick={() => createNewGame()}
-            className="w-full px-4 py-2 mt-3 bg-green-700 text-slate-100 font-medium rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+            className="mt-4 w-full px-4 py-2 bg-green-700 text-slate-100 font-medium rounded-md shadow-md hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           >
             New Game
           </button>
