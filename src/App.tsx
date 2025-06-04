@@ -36,7 +36,7 @@ function App() {
   };
 
   useEffect(() => {
-    createNewGame(), newMove();
+    createNewGame();
   }, []);
 
   const newMove = async () => {};
@@ -98,12 +98,6 @@ function App() {
               <div className="text-center text-xl font-medium text-slate-200">
                 {displayWinner()}
               </div>
-              <button
-                onClick={() => setGame(initGame())}
-                className="w-full px-4 py-2 bg-green-700 text-slate-100 font-medium rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
-              >
-                New Game
-              </button>
             </div>
           ) : (
             <>
@@ -122,14 +116,14 @@ function App() {
                   ))
                 )}
               </div>
-              <button
-                onClick={() => setGame(initGame())}
-                className="mt-6 w-full px-4 py-2 bg-sky-700 text-slate-100 font-medium rounded-md shadow-md hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-              >
-                New Game
-              </button>
             </>
           )}
+          <button
+            onClick={() => createNewGame()}
+            className="w-full px-4 py-2 mt-3 bg-green-700 text-slate-100 font-medium rounded-md shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+          >
+            New Game
+          </button>
         </div>
       </div>
     </div>
