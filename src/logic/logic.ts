@@ -14,8 +14,6 @@ export type Game = {
   endState?: EndState;
 };
 
-//type WinState = Player | "tie";
-
 export const initGame = (): Game => {
   return {
     board: [
