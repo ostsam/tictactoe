@@ -9,15 +9,15 @@ export type Player = "X" | "O";
 export type EndState = "X" | "O" | "tie" | undefined;
 
 export type Game = {
+  id: string;
   board: Board;
   currentPlayer: Player;
   endState?: EndState;
 };
 
-//type WinState = Player | "tie";
-
 export const initGame = (): Game => {
   return {
+    id: crypto.randomUUID(),
     board: [
       [null, null, null],
       [null, null, null],
