@@ -6,7 +6,7 @@ export type Board = [
 ];
 export type Player = "X" | "O";
 
-export type EndState = "X" | "O" | "tie" | undefined;
+export type EndState = "X" | "O" | "tie" | undefined | null;
 
 export type Game = {
   id: string;

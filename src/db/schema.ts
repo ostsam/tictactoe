@@ -1,20 +1,9 @@
+import { jsonb, pgTable, varchar } from "drizzle-orm/pg-core";
+import type { Board } from "../logic/logic.ts";
 
-
-import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
-
-export const usersTable = pgTable("users", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 255 }).notNull(),
-  age: integer().notNull(),
-  email: varchar({ length: 255 }).notNull().unique(),
+export const gamesTable = pgTable("tictactoe-games", {
+  id: varchar({ length: 255 }).primaryKey(),
+  currentPlayer: varchar({ length: 255 }).notNull(),
+  board: jsonb().$type<Board>().notNull(),
+  endState: varchar({ length: 255 }),
 });
-
-/*
-export type Game = {
-  id: string;
-  board: Board;
-  currentPlayer: Player;
-  endState?: EndState;
-};
-
-*/

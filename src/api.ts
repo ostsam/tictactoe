@@ -31,3 +31,28 @@ export class InMemoryTicTacToeApi implements TicTacToeAPI {
     return game;
   }
 }
+
+export class ClientSideApi {
+  async createGame() {
+    const response = await fetch("/api/game", {
+      method: "POST",
+    });
+    const game = await response.json();
+    return game;
+  }
+
+  async move(id: string, rowIdx: number, colIdx: number) {
+    const response = await fetch(`/api/game/${id}/move`, {
+      method: "POST",
+      body: JSON.stringify({
+        rowIdx,
+        colIdx,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const updatedGame = await response.json();
+    return updatedGame;
+  }
+}
