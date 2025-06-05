@@ -7,13 +7,16 @@ app.use(express.json());
 const api = new DbTicTacToeApi();
 const PORT = 3000;
 
-app.get("/testing", (req, res) => res.send("Hi!"));
 app.get("/api/game/:gameId", async (req, res) => {
   const game = await api.getGame(req.params.gameId);
   res.json(game);
 });
+app.get("/api/lobby", async (_, res) => {
+  const list = await api.gameLibrary();
+  res.json(list);
+});
 
-app.post("/api/game", async (req, res) => {
+app.post("/api/game", async (_, res) => {
   const game = await api.createGame();
   res.json(game);
 });

@@ -1,11 +1,15 @@
-import type { Game } from "./logic/logic";
-import { initGame } from "./logic/logic";
-import { move as logicMove } from "./logic/logic";
+import {
+  initGame,
+  move as logicMove,
+  type EndState,
+  type Game,
+} from "./logic/logic";
 
 export interface TicTacToeAPI {
   createGame(): Promise<Game>;
   move(id: string, rowIdx: number, colIdx: number): Promise<Game>;
   getGame(id: string): Promise<Game>;
+  gameLibrary(): Promise<Game[]>;
 }
 
 export class InMemoryTicTacToeApi implements TicTacToeAPI {
@@ -30,10 +34,14 @@ export class InMemoryTicTacToeApi implements TicTacToeAPI {
     }
     return game;
   }
+
+  async gameLibrary(): Promise<Game[]> {
+    return Array.from(this.games.values());
+  }
 }
 
 export class ClientSideApi {
-  async createGame() {
+  async createGame(): Promise<Game> {
     const response = await fetch("/api/game", {
       method: "POST",
     });
@@ -54,5 +62,17 @@ export class ClientSideApi {
     });
     const updatedGame = await response.json();
     return updatedGame;
+  }
+
+  async getGame(id: string): Promise<Game> {
+    const response = await fetch(`/api/game/${id}`);
+    const game = await response.json();
+    return game;
+  }
+
+  async gameLibrary(): Promise<Game[]> {
+    const response = await fetch("/api/lobby");
+    const games = await response.json();
+    return games;
   }
 }
