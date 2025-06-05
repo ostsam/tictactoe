@@ -7,7 +7,6 @@ export default function GameInstance() {
   const api = useMemo(() => new ClientSideApi(), []);
   const { loadedGame } = useLoaderData();
   const [game, setGame] = useState<Game | undefined>(loadedGame);
-  console.log("we are trying to render game ID: ", game?.id);
   const navigate = useNavigate();
 
   const click = async (rowIdx: number, colIdx: number) => {
@@ -16,13 +15,7 @@ export default function GameInstance() {
   };
 
   const createNewGame = async () => {
-    // create new game, direct user to id through router
     const gamePromise: Promise<Game> = api.createGame();
-    /// {
-    //     id: "blah blah blah",
-    //     currentPlayer: 'X'
-    //   }
-    ///
     const game = await gamePromise;
     const gameId = game.id;
     navigate(`/game/${gameId}`);
