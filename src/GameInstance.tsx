@@ -3,6 +3,7 @@ import { ClientSideApi } from "./api";
 import type { Game } from "./logic/logic";
 import { useLoaderData, useNavigate } from "react-router";
 import { io } from "socket.io-client";
+import { CLIENT_URL, SERVER_URL } from "./constants";
 
 export default function GameInstance() {
   const api = useMemo(() => new ClientSideApi(), []);
@@ -16,7 +17,7 @@ export default function GameInstance() {
   };
 
   useEffect(() => {
-    const socket = io("http://localhost:3000");
+    const socket = io(CLIENT_URL);
     socket.on("connect", () => {
       console.log("connected to socket");
       socket.emit("join-game", game?.id);
