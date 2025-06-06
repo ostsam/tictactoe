@@ -1,9 +1,6 @@
-import {
-  initGame,
-  move as logicMove,
-  type Game,
-} from "./logic/logic";
-const BASE_URL = "http://localhost:3000";
+import { SERVER_URL } from "./constants";
+import { initGame, move as logicMove, type Game } from "./logic/logic";
+const BASE_URL = SERVER_URL;
 
 export interface TicTacToeAPI {
   createGame(): Promise<Game>;
