@@ -1,11 +1,23 @@
 import express from "express";
-import ViteExpress from "vite-express";
 import { DbTicTacToeApi } from "./src/db/db";
+import cors from "cors";
+import type { Game } from "./src/logic/logic";
+import { Server } from "socket.io";
+import { GAME_UPDATED, USER_JOINED } from "./src/constants";
+
+const api = new DbTicTacToeApi();
+const PORT = parseInt(process.env.PORT || "3000");
 
 const app = express();
 app.use(express.json());
-const api = new DbTicTacToeApi();
-const PORT = 3000;
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  })
+);
+
+const makeRoomId = (game: Game) => `game-${game.id}`;
 
 app.get("/api/game/:gameId", async (req, res) => {
   const game = await api.getGame(req.params.gameId);
@@ -27,9 +39,34 @@ app.post("/api/game/:gameId/move", async (req, res) => {
     req.body.rowIdx,
     req.body.colIdx
   );
+  io.to(makeRoomId(game)).emit(GAME_UPDATED, game);
   res.json(game);
 });
 
-ViteExpress.listen(app, 3000, () =>
-  console.log(`Server is listening on port ${PORT}.`)
+const server = app.listen(PORT, () =>
+  console.log(`Server is listening at http://localhost:${PORT}`)
 );
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`user connected to ${socket.id}`);
+
+  socket.on("join-game", async (id: string) => {
+    const game = await api.getGame(id);
+    if (!game) {
+      console.error(`Game ${id} not found`);
+      return;
+    }
+
+    const roomId = makeRoomId(game);
+    socket.join(roomId);
+    console.log(`Socket ${socket.id} has joined room ${roomId}.`);
+    io.to(roomId).emit(USER_JOINED, socket.id);
+  });
+});

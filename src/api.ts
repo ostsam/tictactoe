@@ -4,6 +4,7 @@ import {
   type EndState,
   type Game,
 } from "./logic/logic";
+const BASE_URL = "http://localhost:3000";
 
 export interface TicTacToeAPI {
   createGame(): Promise<Game>;
@@ -42,7 +43,7 @@ export class InMemoryTicTacToeApi implements TicTacToeAPI {
 
 export class ClientSideApi {
   async createGame(): Promise<Game> {
-    const response = await fetch("/api/game", {
+    const response = await fetch(`${BASE_URL}/api/game`, {
       method: "POST",
     });
     const game = await response.json();
@@ -50,7 +51,7 @@ export class ClientSideApi {
   }
 
   async move(id: string, rowIdx: number, colIdx: number) {
-    const response = await fetch(`/api/game/${id}/move`, {
+    const response = await fetch(`${BASE_URL}/api/game/${id}/move`, {
       method: "POST",
       body: JSON.stringify({
         rowIdx,
@@ -65,13 +66,13 @@ export class ClientSideApi {
   }
 
   async getGame(id: string): Promise<Game> {
-    const response = await fetch(`/api/game/${id}`);
+    const response = await fetch(`${BASE_URL}/api/game/${id}`);
     const game = await response.json();
     return game;
   }
 
   async gameLibrary(): Promise<Game[]> {
-    const response = await fetch("/api/lobby");
+    const response = await fetch(`${BASE_URL}/api/lobby`);
     const games = await response.json();
     return games;
   }
