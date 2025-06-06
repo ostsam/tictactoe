@@ -24,6 +24,7 @@
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.1",
     "tailwindcss": "^4.1.8",
+    "vercel": "^42.3.0",
     "vite-express": "^0.21.1"
   },
   "devDependencies": {
