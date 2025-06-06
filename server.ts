@@ -41,7 +41,6 @@ app.post("/api/game/:gameId/move", async (req, res) => {
   );
   io.to(makeRoomId(game)).emit(GAME_UPDATED, game);
   res.json(game);
-  console.log(GAME_UPDATED);
 });
 
 const server = app.listen(PORT, () =>
