@@ -1,7 +1,6 @@
 import {
   initGame,
   move as logicMove,
-  type EndState,
   type Game,
 } from "./logic/logic";
 const BASE_URL = "http://localhost:3000";
