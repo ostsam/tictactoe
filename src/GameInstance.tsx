@@ -21,6 +21,9 @@ export default function GameInstance() {
       console.log("connected to socket");
       socket.emit("join-game", game?.id);
     });
+    socket.on("game-updated", (updatedGameState: Game) => {
+      setGame(updatedGameState);
+    });
   });
 
   const createNewGame = async () => {
