@@ -4,7 +4,7 @@ import cors from "cors";
 import type { Game } from "./src/logic/logic";
 import { Server } from "socket.io";
 import { GAME_UPDATED, USER_JOINED } from "./src/constants";
-import { CLIENT_URL } from "./src/constants";
+import { SERVER_URL } from "./src/constants";
 
 const api = new DbTicTacToeApi();
 const PORT = parseInt(process.env.PORT || "3000");
@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: CLIENT_URL,
+    origin: SERVER_URL,
     methods: ["GET", "POST"],
   })
 );
@@ -50,7 +50,7 @@ const server = app.listen(PORT, () =>
 
 const io = new Server(server, {
   cors: {
-    origin: CLIENT_URL,
+    origin: SERVER_URL,
     methods: ["GET", "POST"],
   },
 });
