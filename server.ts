@@ -12,7 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
 const makeRoomId = (game: Game) => `game-${game.id}`;
 
 app.get("/api/game/:gameId", async (req, res) => {
@@ -45,7 +44,7 @@ const server = app.listen(PORT, () =>
 
 const io = new Server(server, {
   cors: {
-    origin: CLIENT_URL,
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
