@@ -19,6 +19,7 @@ let router = createBrowserRouter([
         Component: Lobby,
         loader: async () => {
           const games = await api.gameLibrary();
+          console.log(games);
           return { games };
         },
       },

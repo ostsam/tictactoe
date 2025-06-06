@@ -64,7 +64,7 @@ export class DbTicTacToeApi implements TicTacToeAPI {
       .select()
       .from(gamesTable)
       .where(isNull(gamesTable.endState))
-      .limit(20);
+      .limit(10);
 
     return games.map((game) => ({
       id: game.id,

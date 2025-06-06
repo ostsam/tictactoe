@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { ClientSideApi } from "./api";
 import type { Game } from "./logic/logic";
 import { useLoaderData, useNavigate } from "react-router";
+import { io } from "socket.io-client";
 
 export default function GameInstance() {
   const api = useMemo(() => new ClientSideApi(), []);
@@ -13,6 +14,14 @@ export default function GameInstance() {
     const newMove = await api.move(game!.id, rowIdx, colIdx);
     setGame(newMove);
   };
+
+  useEffect(() => {
+    const socket = io("http://localhost:3000");
+    socket.on("connect", () => {
+      console.log("connected to socket");
+      socket.emit("join-game", game?.id);
+    });
+  });
 
   const createNewGame = async () => {
     const gamePromise: Promise<Game> = api.createGame();
