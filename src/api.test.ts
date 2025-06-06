@@ -1,5 +1,5 @@
 import { InMemoryTicTacToeApi } from "./api";
-import type { Game } from "./logic/logic";
+import { expect } from 'vitest';
 
 describe("InMemoryTicTacToeApi", () => {
   let api: InMemoryTicTacToeApi;
