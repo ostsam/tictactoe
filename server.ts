@@ -3,7 +3,7 @@ import { DbTicTacToeApi } from "./src/db/db";
 import cors from "cors";
 import type { Game } from "./src/logic/logic";
 import { Server } from "socket.io";
-import { CLIENT_URL, GAME_UPDATED, USER_JOINED } from "./src/constants";
+import { GAME_UPDATED, USER_JOINED } from "./src/constants";
 
 const api = new DbTicTacToeApi();
 const PORT = parseInt(process.env.PORT || "3000");
