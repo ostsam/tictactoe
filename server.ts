@@ -12,6 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+
 const makeRoomId = (game: Game) => `game-${game.id}`;
 
 app.get("/api/game/:gameId", async (req, res) => {
